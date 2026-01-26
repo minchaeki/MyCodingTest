@@ -70,3 +70,71 @@
 
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+
+# 📚 자료구조 심화: Deque (Double-Ended Queue)
+
+## 1. Deque란?
+
+**Deque(덱)** 은 *Double-Ended Queue*의 약자로,  
+**양쪽 끝(앞, 뒤) 어디에서나 데이터를 추가·삭제할 수 있는 자료구조**입니다.
+
+- Stack처럼 사용 가능 (LIFO)
+- Queue처럼 사용 가능 (FIFO)
+
+---
+
+## 2. 주요 메서드 정리
+
+Deque는 양방향 구조이기 때문에 메서드 이름에  
+**First(앞)**, **Last(뒤)** 가 붙습니다.
+
+| 기능 | 메서드 (예외 발생) | 메서드 (null / false 반환) | 설명 |
+|----|------------------|---------------------------|------|
+| 앞에 추가 | `addFirst(e)` | `push(e)` | 스택의 `push`와 동일 |
+| 뒤에 추가 | `addLast(e)` | `offer(e)` | 큐의 `offer`와 동일 |
+| 앞에서 제거 | `removeFirst()` | `poll()`, `pop()` | 스택/큐에서 값 추출 |
+| 뒤에서 제거 | `removeLast()` | `pollLast()` | 뒤에서 데이터 추출 |
+| 값 확인 | `getFirst()` | `peek()` | 삭제 없이 맨 앞 값 확인 |
+
+---
+
+## 3. 왜 ArrayDeque를 사용하는가?
+
+Deque의 대표적인 구현체는 `ArrayDeque`와 `LinkedList`가 있지만,  
+**대부분의 상황에서 `ArrayDeque`가 더 적합**합니다.
+
+### ✅ ArrayDeque의 장점
+
+- **성능**
+  - 가변 배열 기반
+  - `LinkedList`보다 메모리 효율이 좋음
+  - 연속된 메모리 구조 → 캐시 친화적, 빠른 속도
+
+- **Stack 대체**
+  - 기존 `Stack` 클래스의 단점 극복
+    - 불필요한 동기화 오버헤드
+    - 상속 구조 문제
+  - `Stack`의 **상위 호환 대체재**
+
+---
+
+## 4. 실전 사용법 (Java)
+
+```java
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+// 1. 선언
+Deque<Integer> deque = new ArrayDeque<>();
+
+// 2. Stack처럼 활용 (LIFO)
+deque.push(1); // [1]
+deque.push(2); // [2, 1]
+deque.pop();   // 2 반환 -> [1]
+
+// 3. Queue처럼 활용 (FIFO)
+deque.offer(1); // [1]
+deque.offer(2); // [1, 2]
+deque.poll();   // 1 반환 -> [2]
+
